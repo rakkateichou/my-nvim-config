@@ -24,15 +24,30 @@ vim.g.maplocalleader = "\\"
 -- Setup lazy.nvim
 require("lazy").setup {
   spec = {
-    { "ellisonleao/gruvbox.nvim" },
-    { "LazyVim/LazyVim", import = "lazyvim.plugins", opts = {
-      colorscheme = "gruvbox",
-    } },
-    -- import your plugins
+    { "ellisonleao/gruvbox.nvim", 
+    lazy = false,
+    priority = 1000, -- make sure to load this before all the other start plugins
+    config = function()
+      -- load the colorscheme here
+      vim.cmd([[colorscheme gruvbox]])
+    end, 
+    },
+
+    { "nvim-treesitter/nvim-treesitter" },
+    {
+    "nvim-neo-tree/neo-tree.nvim",
+    branch = "v3.x",
+    dependencies = {
+	    "nvim-lua/plenary.nvim",
+	    "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+	    "MunifTanjim/nui.nvim",
+	    -- "3rd/image.nvim", -- Optional image support in preview window: See `# Preview Mode` for more information
+    }
+    }
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
   install = { colorscheme = { "gruvbox" } },
   -- automatically check for plugin updates
-  checker = { enabled = true },
+  -- checker = { enabled = true },
 }
